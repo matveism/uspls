@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Package | Shipment Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shipping-fast me-2"></i>
+                <span class="brand-text">ShipTrack Pro</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-search me-1"></i> Track Package
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">
+                            <i class="fas fa-tools me-1"></i> Admin Panel
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">
+                            <i class="fas fa-question-circle me-1"></i> Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">
+                        Track Your Package <span class="highlight">Live</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Real-time tracking updates from pickup to delivery. Enter your tracking number below to see the latest status.
+                    </p>
+                    
+                    <!-- Tracking Form -->
+                    <div class="tracking-card">
+                        <div class="tracking-header">
+                            <h3><i class="fas fa-box-open me-2"></i>Track Your Shipment</h3>
+                            <div class="tracking-badge">
+                                <span class="live-dot"></span> Live Updates
+                            </div>
+                        </div>
+                        
+                        <form id="trackingForm" class="tracking-form">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-barcode"></i>
+                                </span>
+                                <input type="text" 
+                                       id="t_tracking_id" 
+                                       class="form-control form-control-lg" 
+                                       placeholder="Enter tracking number (e.g., TRK123456789)" 
+                                       required
+                                       autocomplete="off">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-search me-2"></i> Track
+                                </button>
+                            </div>
+                            <div class="form-text mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Example tracking numbers: TRK123, USPS940550369930009, FEDEX123456789
+                            </div>
+                        </form>
+                        
+                        <!-- Refresh Controls -->
+                        <div class="refresh-controls mt-3">
+                            <button id="refreshBtn" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-sync-alt me-1"></i> Force Refresh Data
+                            </button>
+                            <span class="cache-info ms-3">
+                                <i class="fas fa-database me-1"></i>
+                                <span id="cacheStatus">Data loaded: Just now</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="illustration">
+                        <div class="package-animation">
+                            <div class="package">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="tracking-line">
+                                <div class="progress-dot"></div>
+                            </div>
+                            <div class="locations">
+                                <div class="location start">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Origin</span>
+                                </div>
+                                <div class="location end">
+                                    <i class="fas fa-flag-checkered"></i>
+                                    <span>Destination</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="container mt-5">
+        <div id="trackingResult" class="tracking-result">
+            <!-- Initial welcome message -->
+            <div class="welcome-message text-center py-5">
+                <div class="welcome-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Ready to Track Your Package</h3>
+                <p class="text-muted">Enter your tracking number above to see detailed shipment information, status updates, and estimated delivery time.</p>
+                <div class="features mt-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="feature-item">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span>Live Location</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="feature-item">
+                                <i class="fas fa-history"></i>
+                                <span>Status History</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="feature-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Real-time ETA</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="feature-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="container mt-5" id="faq">
+        <div class="faq-section">
+            <h2 class="section-title">
+                <i class="fas fa-question-circle me-2"></i>Frequently Asked Questions
+            </h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            How often is tracking information updated?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Tracking information is updated in real-time. Our system fetches the latest data every time you search, and you can use the "Force Refresh" button to get the most current information from our database.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            Why can't I find my tracking number?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Make sure you're entering the exact tracking number provided by the sender. Tracking numbers are case-sensitive. If you still can't find it, contact the sender to verify the tracking number.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            How accurate is the estimated delivery time?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Estimated delivery times are calculated based on distance between origin and destination ZIP codes. They become more accurate when the package is marked as "OUT FOR DELIVERY."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-shipping-fast me-2"></i>ShipTrack Pro</h5>
+                    <p>Advanced package tracking system with real-time updates and delivery estimates.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="footer-link"><i class="fas fa-search me-1"></i> Track Package</a></li>
+                        <li><a href="admin.html" class="footer-link"><i class="fas fa-tools me-1"></i> Admin Panel</a></li>
+                        <li><a href="#faq" class="footer-link"><i class="fas fa-question-circle me-1"></i> Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> support@shiptrack.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 1-800-TRACK-IT</li>
+                        <li><i class="fas fa-clock me-2"></i> 24/7 Support</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="text-muted">© 2024 ShipTrack Pro. All rights reserved.</span>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="text-muted">
+                        <i class="fas fa-database me-1"></i>
+                        <span id="apiStatus">API: Connected</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="public.js"></script>
+    
+    <script>
+    // Initialize some UI interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update cache status
+        function updateCacheStatus() {
+            if (window.dataCache && window.dataCache.timestamp) {
+                const age = Math.floor((Date.now() - window.dataCache.timestamp) / 1000);
+                let status = 'Just now';
+                
+                if (age > 60) {
+                    const minutes = Math.floor(age / 60);
+                    status = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                } else if (age > 0) {
+                    status = `${age} second${age > 1 ? 's' : ''} ago`;
+                }
+                
+                document.getElementById('cacheStatus').textContent = `Data loaded: ${status}`;
+            }
+        }
+        
+        // Update cache status every 10 seconds
+        setInterval(updateCacheStatus, 10000);
+        updateCacheStatus();
+        
+        // URL parameter tracking
+        const urlParams = new URLSearchParams(window.location.search);
+        const trackingId = urlParams.get('tracking');
+        
+        if (trackingId) {
+            const input = document.getElementById('t_tracking_id');
+            if (input) {
+                input.value = trackingId;
+                // Trigger search after a short delay
+                setTimeout(() => {
+                    document.getElementById('trackingForm').dispatchEvent(new Event('submit'));
+                }, 1000);
+            }
+        }
+        
+        // Animate the package illustration
+        animatePackage();
+    });
+    
+    function animatePackage() {
+        const dot = document.querySelector('.progress-dot');
+        if (dot) {
+            let position = 0;
+            setInterval(() => {
+                position = (position + 1) % 100;
+                dot.style.left = `${position}%`;
+            }, 50);
+        }
+    }
+    </script>
+</body>
+</html>
